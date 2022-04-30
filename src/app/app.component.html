@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+   <body>
+      <section class="banner_main">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 ">
+              <div class="text-bg">
+                <h1> FIN Compras Evergreen</h1>
+                <p>Gestionar facturas de compras de Evergreen</p>
+                <button *ngIf="!verFacturas" (click)="postCompras()">Comprar</button><br><br>
+                <div *ngIf="verFormCrear" class="containerForm container">
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="titlepage">
+                           <h2>Creación de factura de compra</h2>
+                        </div>
+                     </div>
+                     <div class="col-md-12">
+                        <div class="formulario main_form">
+                           <div class="row">
+                              <div class="col-md-3 ">
+                                <label class="labelForm">Selecciona un producto:  </label>
+                                <select class="formCreate" name="selectProduct" (change)="onChangeProduct($event)">
+                                  <option *ngFor="let p of productos" [value]="p.id">
+                                    {{p.producto}} ${{p.precio}}
+                                  </option>
+                                </select>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="labelForm">Cantidad:  </label>
+                                <select class="formCreate" name="select" (change)="onChangeCantidad($event)">
+                                  <option *ngFor="let c of cantidad" [value]="c.id">
+                                    {{c.cantidad}}
+                                  </option>
+                                </select>
+                                <button (click)="updateCarrito()" class="plus_btn">+</button>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="labelForm">Carrito: {{productSelected}} ${{priceProductSelected}} Total: {{totalFactura}}</label>
+                              </div>
+                              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                 <button class="send_btn">Crear Factura</button>
+                              </div> <br><br>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+                <button *ngIf="!verFacturas && !verFormCrear"(click)="getFacturas()">Ver facturas a pagar</button>
+                <div *ngIf="verFacturas" class="formulario main_form">
+                  <label>Facturas: {{facturas}}</label>
+                </div>
+                <button *ngIf="verFacturas && !verFormCrear" (click)="updateProductsFacturas()">Actualizar productos de factura</button>
+                <button *ngIf="verFacturas && !verFormCrear" (click)="deleteFacturas()">Eliminar factura</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </body>
+</html>
+<router-outlet></router-outlet>
