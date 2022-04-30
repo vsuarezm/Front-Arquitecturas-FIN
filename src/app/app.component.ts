@@ -42,21 +42,44 @@ export class AppComponent {
     console.log("mira estoy llamando al servicio postCompras")
   }
 
+  public comprar(){
+    const rep = {
+      "products_list" :[
+          {"producto": "tierra", "precio": 200000},
+          {"producto": "abono", "precio": 160000}
+      ],
+      "total_invoice" : 360000
+  }
+    this.serviceFin.registrar(rep).subscribe((element: any) => {
+      console.log("Mira create-invoice:", element.body)
+    });
+  }
+
   public getFacturas(){
     this.verFacturas = true;
     this.serviceFin.obtener().subscribe((element: any) => {
       this.facturas = element.body.products_list;
-      console.log("esta vaina:", element.body.products_list)
+      console.log("Mira get-invoices:", element.body.products_list)
     });
-    console.log("mira estoy llamando al servicio getFacturas")
   }
 
   public updateProductsFacturas(){
-    console.log("mira estoy llamando al servicio updateProductsFacturas")
+    const req =  {
+      "products_list" :[
+          {"producto": "tierra", "precio": 100000},
+          {"producto": "abono", "precio": 80000}
+      ],
+      "total_invoice" : 190000
+    }
+    this.serviceFin.actualizar(1, req).subscribe((element: any) => {
+      console.log("Mira update-invoice-products:", element.body)
+    });
   }
 
   public deleteFacturas(){
-    console.log("mira estoy llamando al servicio deleteFacturas")
+    this.serviceFin.eliminar(1).subscribe((element: any) => {
+      console.log("Mira delete-invoice:", element.body)
+    });
   }
 
   public updateCarrito(){
